@@ -52,6 +52,7 @@ test("POST -> 'BASE_URL', should return status 201, res.body to be defined and r
                             .post(BASE_URL)
                             .send(product)
                             .set('Authorization', `Bearer ${TOKEN}`);
+    product = response.body;
     productId = response.body.id;
     expect(response.status).toBe(201);
     expect(response.body).toBeDefined();
@@ -80,3 +81,27 @@ test("GET -> 'BASE_URL?category=CATEGORY-ID', should return status 200 and res.b
     expect(response.body[0].categoryId).toBe(category.id);
     expect(response.body[0].category.id).toBe(category.id);
 });  
+
+test("GET -> 'BASE_URL/:id', should return status 200 and res.body to be defined, res.body.title === product.title, res.body.category to be defined and res.body.category.id === category.id", async () => {
+    console.log("GET ONE PRODUCT")
+    // console.log(product)
+    const response = await request(app)
+                            .get(`${BASE_URL}/${productId}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body.title).toBe(product.title);
+    // expect the Category relations to Product
+    expect(response.body.category).toBeDefined();
+    expect(response.body.category.id).toBe(category.id);
+});
+
+test("PUT -> 'BASE_URL/:id', should return status 200 and res.body to be defined, res.body.title === 'Horno microondas actualizado'", async () => {
+    console.log("UPDATE PRODUCT")
+    const response = await request(app)
+                            .put(`${BASE_URL}/${productId}`)
+                            .send({ title: 'Horno microondas actualizado' })
+                            .set('Authorization', `Bearer ${TOKEN}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body.title).toBe('Horno microondas actualizado');
+});
