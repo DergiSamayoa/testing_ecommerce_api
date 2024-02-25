@@ -2,11 +2,7 @@ const req = require('supertest');
 const app = require('../app');
 
 const BASE_URL = '/products';
-const product = {
-    title: 'Horno microondas',
-    description: 'Horno microondas de acero inoxidable',
-    price: 100.99
-};
+let product;
 let TOKEN;
 let productId;
 let categoryId;
@@ -26,6 +22,13 @@ beforeAll(async () => {
                                     .send({ name: 'Electrodomésticos' })
                                     .set('Authorization', `Bearer ${TOKEN}`);
     categoryId = responseCategory.body.id;
+
+    product = {
+        title: 'Horno microondas',
+        description: 'Horno microondas de acero inoxidable',
+        price: 100.99,
+        categoryId: categoryId
+    };
 });
 
 afterAll(async () => {
@@ -38,10 +41,10 @@ afterAll(async () => {
 });
 
 test("POST -> 'BASE_URL', should return status 201, res.body to be defined and res.body.name === product.name", async () => {
-    console.log({ ...product, categoryId })
+    console.log(product)
     const response = await req(app)
                             .post(BASE_URL)
-                            .send({ ...product, categoryId })
+                            .send(product)
                             .set('Authorization', `Bearer ${TOKEN}`);
     productId = response.body.id;
     expect(response.status).toBe(201);
