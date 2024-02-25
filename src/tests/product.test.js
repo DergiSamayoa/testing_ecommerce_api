@@ -5,6 +5,7 @@ require('../models');
 
 const BASE_URL = '/products';
 let product;
+let category;
 let TOKEN;
 let productId;
 let categoryId;
@@ -23,6 +24,7 @@ beforeAll(async () => {
                                     .post('/categories')
                                     .send({ name: 'Electrodomésticos' })
                                     .set('Authorization', `Bearer ${TOKEN}`);
+    category = responseCategory.body;
     categoryId = responseCategory.body.id;
 
     product = {
@@ -65,5 +67,16 @@ test("GET -> 'BASE_URL', should return status 200 and res.body to be defined and
     expect(response.body).toHaveLength(1);
     // expect the Category relations to Product
     expect(response.body[0].category).toBeDefined();
-    expect(response.body[0].id).toBe(categoryId);
+    expect(response.body[0].category.id).toBe(category.id);
 });
+
+test("GET -> 'BASE_URL?category=CATEGORY-ID', should return status 200 and res.body to be defined and res.body.length === 1, res.body[0].categoryId === category.id and res.body[0].category.id === category.id", async () => {
+    console.log("GET ALL PRODUCTS WITH CATEGORY FILTERED BY QUERY")
+    const response = await request(app) 
+                            .get(`${BASE_URL}?category=${categoryId}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
+    expect(response.body).toHaveLength(1);
+    expect(response.body[0].categoryId).toBe(category.id);
+    expect(response.body[0].category.id).toBe(category.id);
+});  

@@ -4,7 +4,7 @@ const Category = require('../models/Category');
 
 const getAll = catchError(async(req, res) => {
     const { category: queryCategory } = req.query;
-    console.log(queryCategory)
+    // console.log(queryCategory)
     // Modify the code to use ternary operator
     const results = queryCategory
         ? await Product.findAll({ where: { categoryId: queryCategory }, include: [Category] })
