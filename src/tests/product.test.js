@@ -105,3 +105,11 @@ test("PUT -> 'BASE_URL/:id', should return status 200 and res.body to be defined
     expect(response.body).toBeDefined();
     expect(response.body.title).toBe('Horno microondas actualizado');
 });
+
+test("DELETE -> 'BASE_URL/:id', should return status 204", async () => {
+    console.log("DELETE PRODUCT")
+    const response = await request(app)
+                            .delete(`${BASE_URL}/${productId}`)
+                            .set('Authorization', `Bearer ${TOKEN}`);
+    expect(response.status).toBe(204);
+});
