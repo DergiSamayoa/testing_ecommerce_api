@@ -2,11 +2,11 @@ const User = require("../../models/User");
 
 const userCreate = async () => {
     await User.create({
-        firstName: "Dergi",
-        lastName: "Samlop",
-        email: "dergisamlop@gmail.com",
-        password: "dergi1234",
-        phone: "1234567890",
+            "firstName": "Juan",
+            "lastName": "Juan",
+            "email": "juan@gmail.com",
+            "password": "juan1234",
+            "phone": "+52-99661122"
     });
 }
 

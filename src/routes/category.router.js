@@ -11,4 +11,4 @@ routerCategory.route('/')
 routerCategory.route('/:id')
     .delete(verifyJwt, remove);
 
-module.exports = routerCategory;
+module.exports = routerCategory; 
