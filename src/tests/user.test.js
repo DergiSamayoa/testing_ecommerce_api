@@ -6,15 +6,18 @@ let TOKEN = '';
 let userId;
 
 const user = {
-    firstName: "Juan",
+    firstName: "Marco",
     lastName: "Perez",
-    email: "juan@gmail.com",
-    password: "juan1234",
+    email: "marco@gmail.com",
+    password: "marco1234",
     phone: "1234567890"
 };
 
 beforeAll(async () => {
-    const userLogin = { email: "dergisamlop@gmail.com", password: "dergi1234" };
+    const userLogin = { 
+        email: "juan@gmail.com",
+        password: "juan1234"
+    };
     const response = await request(app)
                             .post(`${BASE_URL}/login`)
                             .send(userLogin);
@@ -50,7 +53,10 @@ test("PUT 'BASE_URL/:id', should return status code 200, res.body to be defined 
 });
 
 test("POST 'BASE_URL/login', should return status code 200, res.body to be defined and res.body.user.email === user.email, and res.body.token to be defined", async () => {
-    const userLogin = { email: "dergisamlop@gmail.com", password: "dergi1234" };
+    const userLogin = { 
+        email: "juan@gmail.com",
+        password: "juan1234"
+    };
     const response = await request(app)
                             .post(`${BASE_URL}/login`)
                             .send(userLogin);
@@ -61,7 +67,10 @@ test("POST 'BASE_URL/login', should return status code 200, res.body to be defin
 });
 
 test("POST 'BASE_URL/login', should return status code 401", async () => {
-    const userLogin = { email: "dergisamlop@gmail.com", password: "No Password" };
+    const userLogin = { 
+        email: "juan@gmail.com",
+        password: "No Password" 
+    };
     const response = await request(app)
                             .post(`${BASE_URL}/login`)
                             .send(userLogin);
