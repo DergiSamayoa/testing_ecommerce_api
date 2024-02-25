@@ -26,7 +26,7 @@ test("POST -> 'BASE_URL', should return status 201, res.body to be defined and r
     expect(response.body.name).toBe(category.name);
 });
 
-test("GET -> 'BASE_URL', should return status 200 and res.body to be defined and res.body to have lenght === 1", async () => {
+test("GET -> 'BASE_URL', should return status 200 and res.body to be defined and res.body to have length === 1", async () => {
     const response = await request(app)
                             .get(BASE_URL);
     expect(response.status).toBe(200);
