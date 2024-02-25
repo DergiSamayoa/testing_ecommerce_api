@@ -24,11 +24,12 @@ beforeAll(async () => {
     TOKEN = response.body.token;
 });
 
-test("GET 'BASE_URL', should return status code 200 and res.body to be an array length = 1", async () => {
+test("GET 'BASE_URL', should return status code 200 and res.body to be defined and array length = 1", async () => {
     const response = await request(app)
                             .get(BASE_URL)
                             .set('Authorization', `Bearer ${TOKEN}`);
     expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
     expect(response.body.length).toBe(1);
 });
 
