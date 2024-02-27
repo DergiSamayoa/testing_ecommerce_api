@@ -28,6 +28,31 @@ const getAll = catchError(async(req, res) => {
     return res.json(results);
 });
 
+const getOne = catchError(async(req, res) => {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const results = await Cart.findByPk(id, { 
+                            where: { userId }, 
+                            include: [
+                                {
+                                    model: Product, 
+                                    attributes: { 
+                                        exclude: ["createdAt", "updatedAt"] 
+                                    },
+                                    include: {
+                                        model: Category,
+                                        attributes: ["name"]
+                                    } 
+                                }, 
+                                {
+                                    model: User, 
+                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
+                                }
+                            ] 
+                        });
+    return res.json(results);
+});
+
 const create = catchError(async(req, res) => {
     const userId = req.user.id;
     const { productId, quantity } = req.body;
@@ -58,6 +83,7 @@ const update = catchError(async(req, res) => {
 
 module.exports = {
     getAll,
+    getOne,
     create,
     remove,
     update
