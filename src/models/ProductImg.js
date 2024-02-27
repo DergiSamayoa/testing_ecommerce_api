@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
 
-const ProductImg = sequelize.define('productimg', {
+const ProductImg = sequelize.define('productImg', {
     url: {
         type: DataTypes.TEXT,
         allowNull: false
@@ -10,6 +10,9 @@ const ProductImg = sequelize.define('productimg', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+},
+{
+    timestamps: false
 });
 
 module.exports = ProductImg;
