@@ -47,7 +47,7 @@ test("PUT 'BASE_URL/:id', should return status code 200, res.body to be defined 
     const response = await request(app)
                             .put(`${BASE_URL}/${userId}`)
                             .send({ firstName: "Pedro" })
-    .set("Authorization", `Bearer ${TOKEN}`);
+                            .set("Authorization", `Bearer ${TOKEN}`);
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body.firstName).toBe("Pedro");

@@ -35,7 +35,6 @@ beforeAll(async () => {
 
   product = await Product.create(bodyProduct)
 
-
   bodyCart = {
     quantity: 1,
     productId: product.id
