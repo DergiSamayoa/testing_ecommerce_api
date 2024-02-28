@@ -1,44 +1,37 @@
-const catchError = require('../utils/catchError');
-const ProductImg = require('../models/ProductImg');
+const ProductImg = require("../models/ProductImg");
+const catchError = require("../utils/catchError");
+const path = require("path")
+const fs = require("fs")
 
-const getAll = catchError(async(req, res) => {
-    const results = await ProductImg.findAll();
-    return res.json(results);
-});
+const getAll = catchError(async (req, res) => {
+  const result = await ProductImg.findAll()
+  return res.json(result)
+})
 
-const create = catchError(async(req, res) => {
-    const result = await ProductImg.create(req.body);
-    return res.status(201).json(result);
-});
+const create = catchError(async (req, res) => {
+  const { filename } = req.file
+  // console.log(filename);
+  const url = `${req.protocol}://${req.headers.host}/uploads/${filename}`
+  // console.log(req.protocol); //http
+  // console.log(req.headers.host); //localhost:8080
+  const newBody = { filename, url }
+  const result = await ProductImg.create(newBody)
+  return res.status(201).json(result)
 
-const getOne = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await ProductImg.findByPk(id);
-    if(!result) return res.sendStatus(404);
-    return res.json(result);
-});
+})
 
-const remove = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await ProductImg.destroy({ where: {id} });
-    if(!result) return res.sendStatus(404);
-    return res.sendStatus(204);
-});
-
-const update = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await ProductImg.update(
-        req.body,
-        { where: {id}, returning: true }
-    );
-    if(result[0] === 0) return res.sendStatus(404);
-    return res.json(result[1][0]);
-});
+const remove = catchError(async (req, res) => {
+  const { id } = req.params
+  const result = await ProductImg.findByPk(id)
+  if (!result) return res.sendStatus(404)
+  const imageFilePath = path.join(__dirname, "..", "public", 'uploads', `${result.filename}`);
+  fs.unlinkSync(imageFilePath)
+  await result.destroy()
+  return res.sendStatus(204)
+})
 
 module.exports = {
-    getAll,
-    create,
-    getOne,
-    remove,
-    update
+  getAll,
+  create,
+  remove
 }

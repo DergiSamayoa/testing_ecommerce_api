@@ -2,6 +2,7 @@ const catchError = require('../utils/catchError');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
+const ProductImg = require('../models/ProductImg');
 const Category = require('../models/Category');
 
 const getAll = catchError(async(req, res) => {
@@ -20,8 +21,7 @@ const getAll = catchError(async(req, res) => {
                                     } 
                                 }, 
                                 {
-                                    model: User, 
-                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
+                                    model: ProductImg
                                 }
                             ] 
                         });
@@ -45,8 +45,7 @@ const getOne = catchError(async(req, res) => {
                                     } 
                                 }, 
                                 {
-                                    model: User, 
-                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
+                                    model: ProductImg
                                 }
                             ] 
                         });

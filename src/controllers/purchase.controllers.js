@@ -3,6 +3,7 @@ const Purchase = require('../models/Purchase');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const Category = require('../models/Category');
+const ProductImg = require('../models/ProductImg');
 
 const getAll = catchError(async(req, res) => {
     const userId = req.user.id;
@@ -20,8 +21,7 @@ const getAll = catchError(async(req, res) => {
                                     } 
                                 }, 
                                 {
-                                    model: User, 
-                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
+                                    model: ProductImg
                                 }
                             ] 
                         });
