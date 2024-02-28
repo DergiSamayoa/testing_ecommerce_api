@@ -4,6 +4,7 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const ProductImg = require('../models/ProductImg');
+const Cart = require('../models/Cart');
 
 const getAll = catchError(async (req, res) => {
   const userId = req.user.id

@@ -1,22 +1,30 @@
-const User = require('./User');
-const Category = require('./Category');
-const Product = require('./Product');
-const ProductImg = require('./ProductImg');
-const Cart = require('./Cart');
-const Purchase = require('./Purchase');
+const Cart = require("./Cart");
+const Category = require("./Category");
+const Product = require("./Product");
+const ProductImg = require("./ProductImg");
+const Purchase = require("./Purchase");
+const User = require("./User");
 
-Product.belongsTo(Category);
-Category.hasMany(Product);
+//  Product -> categoryId
+Product.belongsTo(Category)
+Category.hasMany(Product)
 
-ProductImg.belongsTo(Product);
-Product.hasMany(ProductImg);
+//Cart -> userId
+Cart.belongsTo(User)
+User.hasMany(Cart)
 
-Cart.belongsTo(User);
-User.hasMany(Cart);
-Cart.belongsTo(Product);
-Product.hasMany(Cart);
+//Cart -> productId
+Cart.belongsTo(Product)
+Product.hasMany(Cart)
 
-Purchase.belongsTo(User);
-User.hasMany(Purchase);
-Purchase.belongsTo(Product);
+//Purchase -> userId
+Purchase.belongsTo(User)
+User.hasMany(Purchase)
+
+//Purchase -> productId
+Purchase.belongsTo(Product)
 Product.hasMany(Purchase)
+
+//ProductImg -productId
+ProductImg.belongsTo(Product)
+Product.hasMany(ProductImg)
