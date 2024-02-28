@@ -2,8 +2,8 @@ const catchError = require('../utils/catchError');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const User = require('../models/User');
-const ProductImg = require('../models/ProductImg');
 const Category = require('../models/Category');
+const ProductImg = require('../models/ProductImg');
 
 const getAll = catchError(async(req, res) => {
     const userId = req.user.id;
@@ -15,13 +15,19 @@ const getAll = catchError(async(req, res) => {
                                     attributes: { 
                                         exclude: ["createdAt", "updatedAt"] 
                                     },
-                                    include: {
-                                        model: Category,
-                                        attributes: ["name"]
-                                    } 
+                                    include: [
+                                        {
+                                            model: Category,
+                                            attributes: ["name"]
+                                        },
+                                        {
+                                            model: ProductImg
+                                        }
+                                    ]
                                 }, 
                                 {
-                                    model: ProductImg
+                                    model: User, 
+                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
                                 }
                             ] 
                         });
@@ -39,13 +45,19 @@ const getOne = catchError(async(req, res) => {
                                     attributes: { 
                                         exclude: ["createdAt", "updatedAt"] 
                                     },
-                                    include: {
-                                        model: Category,
-                                        attributes: ["name"]
-                                    } 
+                                    include: [
+                                        {
+                                            model: Category,
+                                            attributes: ["name"]
+                                        },
+                                        {
+                                            model: ProductImg
+                                        }
+                                    ]
                                 }, 
                                 {
-                                    model: ProductImg
+                                    model: User, 
+                                    attributes: { exclude: ["createdAt", "updatedAt", "id", "password"] } 
                                 }
                             ] 
                         });

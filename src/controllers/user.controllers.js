@@ -35,7 +35,7 @@ const update = catchError(async(req, res) => {
 const login = catchError(async(req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: {email} });
-    if(!user) return res.setatus(401).json('Invalid credentials');
+    if(!user) return res.status(401).json('Invalid credentials');
     const isValid = await bcrypt.compare(password, user.password);
     if(!isValid) return res.status(401).json('Invalid credentials');
     const token = jwt.sign({user}, process.env.TOKEN_SECRET, { expiresIn: '1d' });
