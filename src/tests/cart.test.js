@@ -2,7 +2,6 @@ require('../models')
 const request = require("supertest")
 const app = require("../app")
 const Product = require("../models/Product")
-const Cart = require("../models/Cart")
 
 const USER_URL = '/users/login'
 const BASE_URL = '/cart'
@@ -39,12 +38,10 @@ beforeAll(async () => {
     quantity: 1,
     productId: product.id
   }
-
-  Cart.create({ quantity: 1 })
-
 })
 
 test("POST -> 'BASE_URL', should return status code 201, res.body to be de defined and res.body.quantity === bodyCart.quantity", async () => {
+  console.log("CREATE CART")
   const response = await request(app)
     .post(BASE_URL)
     .send(bodyCart)
